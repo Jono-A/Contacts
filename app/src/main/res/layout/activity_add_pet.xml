@@ -52,6 +52,23 @@
         android:layout_marginBottom="10sp"/>
 
     <Button
+        android:id="@+id/add_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_200"
+        android:gravity="center"
+        android:text="Add Pet Image" />
+
+
+    <ImageView
+        android:id="@+id/firebaseImage"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="10dp"/>
+
+
+    <Button
         android:id="@+id/add_contact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
