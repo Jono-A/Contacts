@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.petadoptionfinals.R
-import com.example.petadoptionfinals.databinding.ActivityContactInfoBinding
+import com.example.petadoptionfinals.databinding.ActivityPetInfoBinding
 import com.example.petadoptionfinals.databinding.ToolbarTitleBinding
 import com.example.petadoptionfinals.model.petModel
 import com.example.petadoptionfinals.ui.EditInfoActivity
@@ -19,13 +19,13 @@ import java.io.FileWriter
 
 class PetInfoActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityContactInfoBinding
+    private lateinit var binding : ActivityPetInfoBinding
     private lateinit var toolbarBinding : ToolbarTitleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityContactInfoBinding.inflate(layoutInflater)
+        binding = ActivityPetInfoBinding.inflate(layoutInflater)
         toolbarBinding = ToolbarTitleBinding.bind(binding.root)
 
         setContentView(binding.root)

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.petadoptionfinals.R
-import com.example.petadoptionfinals.databinding.ItemStudentBinding
+import com.example.petadoptionfinals.databinding.ItemPetBinding
 import com.example.petadoptionfinals.model.petModel
 import com.example.petadoptionfinals.mvvm.PetInfoActivity
 import java.io.BufferedReader
@@ -21,7 +21,7 @@ class PetsAdapters(private val context : Context, var studentsList : ArrayList<p
     RecyclerView.Adapter<PetsAdapters.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemStudentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemPetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding, context)
     }
 
@@ -44,7 +44,7 @@ class PetsAdapters(private val context : Context, var studentsList : ArrayList<p
 
     class ViewHolder(
 
-        private val binding: ItemStudentBinding,
+        private val binding: ItemPetBinding,
         private val context: Context
     ) :
         RecyclerView.ViewHolder(binding.root) {
