@@ -3,10 +3,12 @@ package com.example.petadoptionfinals.ui
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.petadoptionfinals.R
 import com.example.petadoptionfinals.databinding.ItemPetBinding
 import com.example.petadoptionfinals.model.petModel
@@ -50,10 +52,15 @@ class PetsAdapters(private val context : Context, var studentsList : ArrayList<p
         RecyclerView.ViewHolder(binding.root) {
         //item student
         fun bind(contacts: petModel, position: Int) {
-            binding.ivProfile.setImageDrawable(context.getDrawable(R.drawable.studentavatar))
             binding.tvName.text = contacts.name
             binding.tvEmail.text = contacts.email
             binding.tvPhone.text = contacts.phone
+
+            Log.d("TESTTEST", contacts.imageUrl + "blah")
+
+            Glide.with(context)
+                .load(contacts.imageUrl)
+                .into(binding.ivProfile)
 
             binding.llData.setOnClickListener {
                 val intent = Intent(context, PetInfoActivity::class.java)
@@ -82,7 +89,7 @@ class PetsAdapters(private val context : Context, var studentsList : ArrayList<p
             }
             builder.setNegativeButton("Delete") { dialog, which ->
                 dialog.dismiss()
-                Toast.makeText(context, "Delete this Contact?", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Delete this Listing?", Toast.LENGTH_SHORT).show()
                 show_areYouSure()
             }
             val dialog: AlertDialog? = builder.create()
@@ -97,7 +104,6 @@ class PetsAdapters(private val context : Context, var studentsList : ArrayList<p
             builder.setPositiveButton("Yes") { dialog, which ->
                 dialog.dismiss()
                 Toast.makeText(context, "Contact Deleted", Toast.LENGTH_SHORT).show()
-                deleteItem(position, context)
                 context.startActivity(Intent(context, MainActivity::class.java))
             }
             builder.setNegativeButton("No") { dialog, which ->
@@ -109,39 +115,7 @@ class PetsAdapters(private val context : Context, var studentsList : ArrayList<p
             return false
         }
 
-        private fun deleteItem(position : Int, context: Context) {
 
-            val path : File = context.filesDir
-            val file : File = File(path, "datafile.txt")
-            val tempFile : File = File.createTempFile("temp", null, context.filesDir)
-
-            try {
-                val reader = BufferedReader(FileReader(file))
-                val writer = BufferedWriter(FileWriter(tempFile))
-                var line: String?
-                var currLine = 0
-
-                while (reader.readLine().also { line = it } != null) {
-                    if (currLine == position){
-                        Toast.makeText(context, "Contact Deleted.", Toast.LENGTH_SHORT).show()
-                    } else {
-                        val str = line.toString()
-                        writer.write(str + '\n')
-                    }
-                    currLine++
-                }
-
-                reader.close()
-                writer.close()
-
-                file.delete()
-                tempFile.renameTo(file)
-            } catch (e: Exception) {
-                Toast.makeText(context, "Failed to Delete Contact", Toast.LENGTH_SHORT).show()
-                e.printStackTrace()
-            }
-
-            }
 
     }
 }

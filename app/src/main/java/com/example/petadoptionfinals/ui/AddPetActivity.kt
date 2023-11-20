@@ -92,6 +92,9 @@ class AddPetActivity : AppCompatActivity() {
     }
 
     private fun addContact(): Boolean {
+        val name = binding.inName.text.toString()
+        val email = binding.inEmail.text.toString()
+        val phone = binding.inPhone.text.toString()
         val progressDialog = ProgressDialog (this)
         progressDialog.setMessage("Uploading Pet Image...")
         progressDialog.setCancelable(false)
@@ -104,6 +107,20 @@ class AddPetActivity : AppCompatActivity() {
 
         storageReference.putFile(ImageUri).
         addOnSuccessListener {
+            storageReference.downloadUrl.addOnSuccessListener {
+
+                database = FirebaseDatabase.getInstance().getReference("Pets")
+                val petModel = petModel(name, email, phone, it.toString())
+                database.child(name).setValue(petModel).addOnSuccessListener {
+                    binding.inName.text.clear()
+                    binding.inEmail.text.clear()
+                    binding.inPhone.text.clear()
+                    Toast.makeText(this, "Pet Added", Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener{
+                    Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+
             binding.firebaseImage.setImageURI(null)
             Toast.makeText(this@AddPetActivity, "Successfully uploaded", Toast.LENGTH_SHORT).show()
             if (progressDialog.isShowing) progressDialog.dismiss()
@@ -111,22 +128,6 @@ class AddPetActivity : AppCompatActivity() {
 
             if (progressDialog.isShowing)progressDialog.dismiss()
             Toast.makeText(this@AddPetActivity,"Failed",Toast.LENGTH_SHORT).show()
-        }
-
-
-        val name = binding.inName.text.toString()
-        val email = binding.inEmail.text.toString()
-        val phone = binding.inPhone.text.toString()
-
-        database = FirebaseDatabase.getInstance().getReference("Pets")
-        val petModel = petModel(name, email, phone)
-        database.child(name).setValue(petModel).addOnSuccessListener {
-            binding.inName.text.clear()
-            binding.inEmail.text.clear()
-            binding.inPhone.text.clear()
-            Toast.makeText(this, "Pet Added", Toast.LENGTH_SHORT).show()
-        }.addOnFailureListener{
-            Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
         }
 
 

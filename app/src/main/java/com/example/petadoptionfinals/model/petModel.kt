@@ -7,7 +7,9 @@ import kotlinx.parcelize.Parcelize
 data class petModel(
 
     //var profilePic: String,
-    var name : String?,
-    var email : String?,
-    var phone : String?,
+    var name : String?=null,
+    var email : String?=null,
+    var phone : String?=null,
+    var imageUrl : String?=null,
+
 ) : Parcelable
