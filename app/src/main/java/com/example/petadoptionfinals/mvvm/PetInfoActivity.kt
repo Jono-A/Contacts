@@ -9,8 +9,10 @@ import com.example.petadoptionfinals.R
 import com.example.petadoptionfinals.databinding.ActivityPetInfoBinding
 import com.example.petadoptionfinals.databinding.ToolbarTitleBinding
 import com.example.petadoptionfinals.model.petModel
+import com.example.petadoptionfinals.ui.AddPetActivity
 import com.example.petadoptionfinals.ui.EditInfoActivity
 import com.example.petadoptionfinals.ui.MainActivity
+import com.google.firebase.database.FirebaseDatabase
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.File
@@ -69,6 +71,7 @@ class PetInfoActivity : AppCompatActivity() {
         //dialog pop up
         binding.btnDelete.setOnClickListener{
             confirmAction(position)
+            intent.getStringExtra("name").toString()
         }
     }
 
@@ -93,11 +96,29 @@ class PetInfoActivity : AppCompatActivity() {
         return false
     }
 
+    private fun deleteData(
+        id : String
+    ){
+
+    }
     fun deleteItem(position:Int){
 
         val path : File = this.filesDir
         val file : File = File(path, "datafile.txt")
         val tempFile : File = File.createTempFile("temp", null,this.filesDir)
+        val databaseReference = FirebaseDatabase.getInstance().getReference("Pets").child(toString())
+        val mTask = databaseReference.removeValue()
+
+        mTask.addOnSuccessListener {
+            Toast.makeText(this, "Data has been erased", Toast.LENGTH_LONG).show()
+
+            val intent = Intent(this, PetViewModel::class.java)
+            finish()
+            startActivity(intent)
+        }.addOnFailureListener{error ->
+            Toast.makeText(this, "Delete Data error ${error.message}", Toast.LENGTH_LONG).show()
+
+        }
 
         try {
             val reader = BufferedReader(FileReader(file))
