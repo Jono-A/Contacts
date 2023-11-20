@@ -21,8 +21,8 @@ import java.io.FileWriter
 
 class PetInfoActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityPetInfoBinding
-    private lateinit var toolbarBinding : ToolbarTitleBinding
+    private lateinit var binding: ActivityPetInfoBinding
+    private lateinit var toolbarBinding: ToolbarTitleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,7 @@ class PetInfoActivity : AppCompatActivity() {
         }
 
 
-        val students : petModel? = intent.getParcelableExtra("contact")
+        val students: petModel? = intent.getParcelableExtra("contact")
 
         //activity_contact_info
         if (students != null) {
@@ -69,26 +69,27 @@ class PetInfoActivity : AppCompatActivity() {
         }
 
         //dialog pop up
-        binding.btnDelete.setOnClickListener{
-            confirmAction(position)
+        binding.btnDelete.setOnClickListener {
+            if (students != null) {
+                confirmAction(students)
+            }
             intent.getStringExtra("name").toString()
         }
     }
 
     //confirm delete dialog
-    fun confirmAction(position: Int):Boolean{
-        val builder : android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
+    fun confirmAction(students: petModel): Boolean {
+        val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
         builder.setTitle("Delete Contact")
         builder.setMessage("Are you sure you want to delete this contact?")
-        builder.setPositiveButton("Yes"){
-                dialog, _ ->
+        builder.setPositiveButton("Yes") { dialog, _ ->
             dialog.dismiss()
             Toast.makeText(this, "Contact Deleted", Toast.LENGTH_SHORT).show()
-            deleteItem(position)
+            deleteItem(students)
 
             this.startActivity(Intent(this, MainActivity::class.java))
         }
-        builder.setNegativeButton("No") { dialog, _  ->
+        builder.setNegativeButton("No") { dialog, _ ->
             dialog.dismiss()
         }
         val dialog: android.app.AlertDialog = builder.create()
@@ -96,55 +97,22 @@ class PetInfoActivity : AppCompatActivity() {
         return false
     }
 
-    private fun deleteData(
-        id : String
-    ){
+    fun deleteItem(students: petModel) {
 
-    }
-    fun deleteItem(position:Int){
+        val databaseReference =
+            students.name?.let { FirebaseDatabase.getInstance().getReference("Pets").child(it) }
+        val mTask = databaseReference?.removeValue()
 
-        val path : File = this.filesDir
-        val file : File = File(path, "datafile.txt")
-        val tempFile : File = File.createTempFile("temp", null,this.filesDir)
-        val databaseReference = FirebaseDatabase.getInstance().getReference("Pets").child(toString())
-        val mTask = databaseReference.removeValue()
-
-        mTask.addOnSuccessListener {
+        mTask?.addOnSuccessListener {
             Toast.makeText(this, "Data has been erased", Toast.LENGTH_LONG).show()
 
             val intent = Intent(this, PetViewModel::class.java)
             finish()
             startActivity(intent)
-        }.addOnFailureListener{error ->
+        }?.addOnFailureListener { error ->
             Toast.makeText(this, "Delete Data error ${error.message}", Toast.LENGTH_LONG).show()
 
         }
 
-        try {
-            val reader = BufferedReader(FileReader(file))
-            val writer = BufferedWriter(FileWriter(tempFile))
-            var line : String?
-            var currentLine = 0
-
-            while (reader.readLine().also {
-                    line = it
-                } != null){
-                if(currentLine == position){
-
-                } else{
-                    val str = line.toString()
-                    writer.write(str + '\n')
-                }
-                currentLine++
-            }
-            reader.close()
-            writer.close()
-
-            file.delete()
-            tempFile.renameTo(file)
-        } catch (e: Exception){
-            Toast.makeText(this, "Action Failed", Toast.LENGTH_SHORT).show() //failed to delete | Toast
-        }
     }
-
 }
