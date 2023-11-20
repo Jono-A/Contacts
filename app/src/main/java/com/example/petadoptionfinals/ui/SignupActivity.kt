@@ -6,7 +6,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.petadoptionfinals.databinding.ActivitySignupBinding
 import com.example.petadoptionfinals.model.user
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -14,6 +16,8 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
+    private val authFirebase = Firebase.auth //**
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +36,27 @@ class SignupActivity : AppCompatActivity() {
 
                     firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{
                         if (it.isSuccessful){
+                            databaseReference = FirebaseDatabase.getInstance().getReference("user")
+                            val user = user (email,password)
+                            authFirebase.currentUser?.uid?.let { it1 ->
+                                databaseReference.child(it1).setValue(user).addOnSuccessListener {
+
+                                    binding.signupEmail.text.clear()
+                                    binding.signupPassword.text.clear()
+                                    binding.signupConfirm.text.clear()
+
+                                    Toast.makeText(this,"User Added",Toast.LENGTH_SHORT).show()
+
+                                }.addOnFailureListener{
+
+                                    Toast.makeText(this,"Failed",Toast.LENGTH_SHORT).show()
+                                }
+                            }
                             val intent = Intent(this, LoginActivity::class.java)
                             startActivity(intent)
-                        }else{
+                        }
+
+                        else{
                             Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -45,20 +67,6 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "Field cannot be empty", Toast.LENGTH_SHORT).show()
             }
 
-            databaseReference = FirebaseDatabase.getInstance().getReference("user")
-            val user = user (email,password)
-            databaseReference.child(email).setValue(user).addOnSuccessListener {
-
-                binding.signupEmail.text.clear()
-                binding.signupPassword.text.clear()
-                binding.signupConfirm.text.clear()
-
-                Toast.makeText(this,"User Added",Toast.LENGTH_SHORT).show()
-
-            }.addOnFailureListener{
-
-                Toast.makeText(this,"Failed",Toast.LENGTH_SHORT).show()
-            }
         }
         binding.loginRedirectText.setOnClickListener{
             val loginIntent = Intent(this, LoginActivity::class.java)
