@@ -45,10 +45,9 @@ class PetInfoActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        toolbarBinding.toolbarTitle.text = "Contact Information"
+        toolbarBinding.toolbarTitle.text = "Pet Information"
 
         val position = intent.getIntExtra("position", 0)
-
 
 
         students = intent.getParcelableExtra("contact")!!
@@ -153,13 +152,13 @@ class PetInfoActivity : AppCompatActivity() {
         val mTask = databaseReference?.removeValue()
 
         mTask?.addOnSuccessListener {
-            Toast.makeText(this, "Data has been erased", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Another Happy Home!", Toast.LENGTH_LONG).show()
 
             val intent = Intent(this, PetViewModel::class.java)
             finish()
             startActivity(intent)
         }?.addOnFailureListener { error ->
-            Toast.makeText(this, "Delete Data error ${error.message}", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Please try again ${error.message}", Toast.LENGTH_LONG).show()
 
         }
 

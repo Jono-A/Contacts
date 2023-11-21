@@ -33,7 +33,6 @@ class EditInfoActivity : AppCompatActivity() {
 
             }
         }
-
     }
 
     fun editData(position:Int){
