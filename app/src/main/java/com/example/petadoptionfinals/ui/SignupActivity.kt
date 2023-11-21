@@ -29,24 +29,24 @@ class SignupActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         binding.signupButton.setOnClickListener{
-            val name = binding.Name.text.toString()
-            val phone = binding.Phone.text.toString()
+            val name = binding.signupName.text.toString()
+            val phone = binding.signupPhone.text.toString()
             val email = binding.signupEmail.text.toString()
             val password = binding.signupPassword.text.toString()
             val confirmPassword = binding.signupConfirm.text.toString()
 
-            if(email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()){
+            if(name.isNotEmpty()&&phone.isNotEmpty()&& email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()){
                 if(password == confirmPassword){
 
                     firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{
                         if (it.isSuccessful){
                             databaseReference = FirebaseDatabase.getInstance().getReference("user")
-                            val user = user (email,password)
+                            val user = user (name, phone, email,password)
                             authFirebase.currentUser?.uid?.let { it1 ->
                                 databaseReference.child(it1).setValue(user).addOnSuccessListener {
 
-                                    binding.Name.text.clear()
-                                    binding.Phone.text.clear()
+                                    binding.signupName.text.clear()
+                                    binding.signupPhone.text.clear()
                                     binding.signupEmail.text.clear()
                                     binding.signupPassword.text.clear()
                                     binding.signupConfirm.text.clear()
