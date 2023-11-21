@@ -9,9 +9,11 @@ import com.example.petadoptionfinals.R
 import com.example.petadoptionfinals.databinding.ActivityPetInfoBinding
 import com.example.petadoptionfinals.databinding.ToolbarTitleBinding
 import com.example.petadoptionfinals.model.petModel
+import com.example.petadoptionfinals.model.user
 import com.example.petadoptionfinals.ui.AddPetActivity
 import com.example.petadoptionfinals.ui.EditInfoActivity
 import com.example.petadoptionfinals.ui.MainActivity
+import com.google.firebase.auth.UserInfo
 import com.google.firebase.database.FirebaseDatabase
 import java.io.BufferedReader
 import java.io.BufferedWriter
@@ -50,6 +52,7 @@ class PetInfoActivity : AppCompatActivity() {
             binding.Name.text = students?.name
             binding.inGender.text = students?.gender
             binding.inBreed.text = students?.breed
+            binding.inUserInfo.text = students?.userinfo
         }
 
         //long click Email
@@ -68,6 +71,12 @@ class PetInfoActivity : AppCompatActivity() {
             true
         }
 
+        binding.inUserInfo.setOnLongClickListener {
+            val UserInfo = binding.inUserInfo.text.toString()
+            val UserInfoIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$UserInfo"))
+            startActivity(UserInfoIntent)
+            true
+        }
         //dialog pop up
         binding.btnDelete.setOnClickListener {
             if (students != null) {

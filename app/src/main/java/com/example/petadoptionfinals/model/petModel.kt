@@ -11,5 +11,6 @@ data class petModel(
     var gender : String? = null,
     var breed : String? = null,
     var imageUrl : String?=null,
+    var userinfo : String?=null,
 
 ) : Parcelable

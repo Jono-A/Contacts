@@ -43,6 +43,13 @@
         android:textSize="25sp"
         android:text="@string/app_name" />
 
+    <TextView
+        android:id="@+id/in_UserInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:text="Pet Owner Information" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
