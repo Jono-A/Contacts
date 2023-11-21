@@ -49,10 +49,7 @@ class PetInfoActivity : AppCompatActivity() {
 
         val position = intent.getIntExtra("position", 0)
 
-        binding.btnEdit.setOnClickListener {
 
-            startActivity(Intent(this@PetInfoActivity, EditInfoActivity::class.java))
-        }
 
         students = intent.getParcelableExtra("contact")!!
         //Toast.makeText(this@PetInfoActivity, students.userinfo, Toast.LENGTH_SHORT).show()
@@ -111,6 +108,8 @@ class PetInfoActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
               data = snapshot.getValue<user>()!!
                 binding.inUserName.text = data?.name    //add user info
+                binding.inPetOwnerphoneNum.text=data?.phoneNum
+                binding.inPetEmail.text=data?.email
             }
 
             override fun onCancelled(error: DatabaseError) {
