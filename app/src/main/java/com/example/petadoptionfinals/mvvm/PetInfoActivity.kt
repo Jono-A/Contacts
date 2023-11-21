@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.petadoptionfinals.R
 import com.example.petadoptionfinals.databinding.ActivityPetInfoBinding
 import com.example.petadoptionfinals.databinding.ToolbarTitleBinding
@@ -13,8 +14,16 @@ import com.example.petadoptionfinals.model.user
 import com.example.petadoptionfinals.ui.AddPetActivity
 import com.example.petadoptionfinals.ui.EditInfoActivity
 import com.example.petadoptionfinals.ui.MainActivity
+import com.example.petadoptionfinals.ui.PetsAdapters
+import com.google.firebase.Firebase
 import com.google.firebase.auth.UserInfo
+import com.google.firebase.auth.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.database
+import com.google.firebase.database.getValue
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.File
@@ -25,6 +34,8 @@ class PetInfoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPetInfoBinding
     private lateinit var toolbarBinding: ToolbarTitleBinding
+    private val authFirebase = Firebase.auth //**
+    private lateinit var  students: petModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,17 +54,22 @@ class PetInfoActivity : AppCompatActivity() {
             startActivity(Intent(this@PetInfoActivity, EditInfoActivity::class.java))
         }
 
+        students = intent.getParcelableExtra("contact")!!
+        //Toast.makeText(this@PetInfoActivity, students.userinfo, Toast.LENGTH_SHORT).show()
+        referenceDatabase()
 
-        val students: petModel? = intent.getParcelableExtra("contact")
-
-        //activity_contact_info
+        //activity_pet_info
         if (students != null) {
-            binding.profilePicture.setImageDrawable(this.getDrawable(R.drawable.studentavatar))
+            Glide.with(this@PetInfoActivity)
+                .load(students.imageUrl)
+                .into(binding.profilePicture)
+            //binding.profilePicture.setImageDrawable(this.getDrawable(R.drawable.studentavatar))
             binding.Name.text = students?.name
             binding.inGender.text = students?.gender
             binding.inBreed.text = students?.breed
-            binding.inUserInfo.text = students?.userinfo
+            //binding.inUserInfo.text = students?.userinfo
         }
+
 
         //long click Email
         binding.inGender.setOnLongClickListener {
@@ -71,12 +87,12 @@ class PetInfoActivity : AppCompatActivity() {
             true
         }
 
-        binding.inUserInfo.setOnLongClickListener {
+       /* binding.inUserInfo.setOnLongClickListener {
             val UserInfo = binding.inUserInfo.text.toString()
             val UserInfoIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$UserInfo"))
             startActivity(UserInfoIntent)
             true
-        }
+        } */
         //dialog pop up
         binding.btnDelete.setOnClickListener {
             if (students != null) {
@@ -84,6 +100,31 @@ class PetInfoActivity : AppCompatActivity() {
             }
             intent.getStringExtra("name").toString()
         }
+    }
+
+    private fun referenceDatabase() {
+        //1. reference the database to the object holding lists
+        //2. use the class ValueEventListener
+        lateinit var data: user
+
+        val listListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+              data = snapshot.getValue<user>()!!
+                binding.inUserName.text = data?.name    //add user info
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                //  readStatus.value = ReadListsState.Error(error.message)
+            }
+
+        }
+
+        var petReference = students.userinfo?.let {
+            Firebase.database.reference.child("user").child(
+                it
+            )
+        }
+        petReference?.addValueEventListener(listListener)
     }
 
     //confirm delete dialog

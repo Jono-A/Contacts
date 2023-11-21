@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.petadoptionfinals.databinding.ActivityAddPetBinding
 import com.example.petadoptionfinals.databinding.ToolbarTitleBinding
 import com.example.petadoptionfinals.model.petModel
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -24,6 +26,7 @@ class AddPetActivity : AppCompatActivity() {
     private lateinit var toolbarBinding : ToolbarTitleBinding
     private lateinit var database : DatabaseReference
     private lateinit var ImageUri : Uri
+    private val authFirebase = Firebase.auth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,12 +108,15 @@ class AddPetActivity : AppCompatActivity() {
         val fileName = formatter.format(now)
         val storageReference = FirebaseStorage.getInstance().getReference("images/$fileName")
 
+
         storageReference.putFile(ImageUri).
         addOnSuccessListener {
             storageReference.downloadUrl.addOnSuccessListener {
 
                 database = FirebaseDatabase.getInstance().getReference("Pets")
-                val petModel = petModel(name, gender, breed, it.toString())
+                val petModel = petModel(name, gender, breed, it.toString(),
+                    authFirebase.currentUser?.uid
+                )
                 database.child(name).setValue(petModel).addOnSuccessListener {
                     binding.inName.text.clear()
                     binding.inGender.text.clear()
