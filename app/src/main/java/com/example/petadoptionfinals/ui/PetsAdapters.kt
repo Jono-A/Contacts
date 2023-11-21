@@ -53,8 +53,8 @@ class PetsAdapters(private val context : Context, var studentsList : ArrayList<p
         //item student
         fun bind(contacts: petModel, position: Int) {
             binding.tvName.text = contacts.name
-            binding.tvEmail.text = contacts.email
-            binding.tvPhone.text = contacts.phone
+            binding.tvGender.text = contacts.gender
+            binding.tvBreed.text = contacts.breed
 
             Log.d("TESTTEST", contacts.imageUrl + "blah")
 

@@ -48,23 +48,23 @@ class PetInfoActivity : AppCompatActivity() {
         if (students != null) {
             binding.profilePicture.setImageDrawable(this.getDrawable(R.drawable.studentavatar))
             binding.Name.text = students?.name
-            binding.Email.text = students?.email
-            binding.Phone.text = students?.phone
+            binding.inGender.text = students?.gender
+            binding.inBreed.text = students?.breed
         }
 
         //long click Email
-        binding.Email.setOnLongClickListener {
-            val email = binding.Email.text.toString()
-            val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$email"))
-            startActivity(emailIntent)
+        binding.inGender.setOnLongClickListener {
+            val gender = binding.inGender.text.toString()
+            val genderIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$gender"))
+            startActivity(genderIntent)
             true
         }
 
         //long click Phone Number
-        binding.Phone.setOnLongClickListener {
-            val phoneNumber = binding.Phone.text.toString()
-            val dialIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
-            startActivity(dialIntent)
+        binding.inBreed.setOnLongClickListener {
+            val breed = binding.inBreed.text.toString()
+            val breedIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$breed"))
+            startActivity(breedIntent)
             true
         }
 

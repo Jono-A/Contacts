@@ -72,19 +72,19 @@ class AddPetActivity : AppCompatActivity() {
     }
 
 
-    private fun inputRequirements(name: String, email: String, phone: String): Boolean {
+    private fun inputRequirements(name: String, gender: String, breed: String): Boolean {
         if (name.isEmpty()) {
             binding.inName.error = "Input missing"
             return false
         }
 
-        if (email.isEmpty()) {
-            binding.inEmail.error = "Input missing"
+        if (gender.isEmpty()) {
+            binding.inGender.error = "Input missing"
             return false
         }
 
-        if (phone.isEmpty()) {
-            binding.inPhone.error = "Input missing"
+        if (breed.isEmpty()) {
+            binding.inBreed.error = "Input missing"
             return false
         }
 
@@ -93,8 +93,8 @@ class AddPetActivity : AppCompatActivity() {
 
     private fun addContact(): Boolean {
         val name = binding.inName.text.toString()
-        val email = binding.inEmail.text.toString()
-        val phone = binding.inPhone.text.toString()
+        val gender = binding.inGender.text.toString()
+        val breed = binding.inBreed.text.toString()
         val progressDialog = ProgressDialog (this)
         progressDialog.setMessage("Uploading Pet Image...")
         progressDialog.setCancelable(false)
@@ -110,11 +110,11 @@ class AddPetActivity : AppCompatActivity() {
             storageReference.downloadUrl.addOnSuccessListener {
 
                 database = FirebaseDatabase.getInstance().getReference("Pets")
-                val petModel = petModel(name, email, phone, it.toString())
+                val petModel = petModel(name, gender, breed, it.toString())
                 database.child(name).setValue(petModel).addOnSuccessListener {
                     binding.inName.text.clear()
-                    binding.inEmail.text.clear()
-                    binding.inPhone.text.clear()
+                    binding.inGender.text.clear()
+                    binding.inBreed.text.clear()
                     Toast.makeText(this, "Pet Added", Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener{
                     Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
@@ -131,7 +131,7 @@ class AddPetActivity : AppCompatActivity() {
         }
 
 
-        if (!inputRequirements(name, email, phone)) {
+        if (!inputRequirements(name, gender, breed)) {
             return false
         }
 
@@ -144,7 +144,7 @@ class AddPetActivity : AppCompatActivity() {
         val file: File = File(path, "datafile.txt")
         val stream: FileWriter = FileWriter(file, true)
         try {
-            stream.write("${binding.inName.text}, ${binding.inEmail.text}, ${binding.inPhone.text}\n")
+            stream.write("${binding.inName.text}, ${binding.inGender.text}, ${binding.inBreed.text}\n")
 
         } catch (e: Exception) {
 

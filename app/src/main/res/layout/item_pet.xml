@@ -39,19 +39,19 @@
             android:gravity="bottom"/>
 
         <TextView
-            android:id="@+id/tv_email"
+            android:id="@+id/tv_gender"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Email"
+            android:text="Gender"
             android:gravity="center_vertical"/>
 
         <TextView
-            android:id="@+id/tv_phone"
+            android:id="@+id/tv_breed"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Phone"
+            android:text="Breed"
             android:gravity="top"/>
 
 

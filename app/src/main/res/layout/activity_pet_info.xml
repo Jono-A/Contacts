@@ -30,14 +30,14 @@
         />
 
     <TextView
-        android:id="@+id/Email"
+        android:id="@+id/in_Gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="25sp"
         android:text="@string/app_name" />
 
     <TextView
-        android:id="@+id/Phone"
+        android:id="@+id/in_Breed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="25sp"
