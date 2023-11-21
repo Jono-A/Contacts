@@ -129,11 +129,11 @@ class PetInfoActivity : AppCompatActivity() {
     //confirm delete dialog
     fun confirmAction(students: petModel): Boolean {
         val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
-        builder.setTitle("Delete Contact")
-        builder.setMessage("Are you sure you want to delete this contact?")
+        builder.setTitle("Adopt")
+        builder.setMessage("Are you sure you want to adopt this Pet?")
         builder.setPositiveButton("Yes") { dialog, _ ->
             dialog.dismiss()
-            Toast.makeText(this, "Contact Deleted", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Pet Adopted", Toast.LENGTH_SHORT).show()
             deleteItem(students)
 
             this.startActivity(Intent(this, MainActivity::class.java))
