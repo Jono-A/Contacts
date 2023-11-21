@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.petadoptionfinals.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import java.util.jar.Attributes.Name
 
 class LoginActivity : AppCompatActivity() {
 

@@ -51,6 +51,35 @@
         android:inputType="textEmailAddress"
         android:layout_marginBottom="10sp"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Breed"
+        android:textSize="18dp" />
+
+    <EditText
+        android:id="@+id/breed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="10sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gender"
+        android:textSize="18dp" />
+
+    <EditText
+        android:id="@+id/Gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="10sp"/>
+
+
     <Button
         android:id="@+id/edit_contact"
         android:layout_width="match_parent"

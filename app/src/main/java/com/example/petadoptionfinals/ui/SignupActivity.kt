@@ -2,6 +2,7 @@ package com.example.petadoptionfinals.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.petadoptionfinals.databinding.ActivitySignupBinding
@@ -11,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.util.jar.Attributes.Name
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
@@ -27,6 +29,8 @@ class SignupActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         binding.signupButton.setOnClickListener{
+            val name = binding.Name.text.toString()
+            val phone = binding.Phone.text.toString()
             val email = binding.signupEmail.text.toString()
             val password = binding.signupPassword.text.toString()
             val confirmPassword = binding.signupConfirm.text.toString()
@@ -41,6 +45,8 @@ class SignupActivity : AppCompatActivity() {
                             authFirebase.currentUser?.uid?.let { it1 ->
                                 databaseReference.child(it1).setValue(user).addOnSuccessListener {
 
+                                    binding.Name.text.clear()
+                                    binding.Phone.text.clear()
                                     binding.signupEmail.text.clear()
                                     binding.signupPassword.text.clear()
                                     binding.signupConfirm.text.clear()
