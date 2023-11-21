@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.petadoptionfinals.databinding.ActivityMainBinding
 import com.example.petadoptionfinals.databinding.ToolbarTitleBinding
 import com.example.petadoptionfinals.model.petModel
+import com.example.petadoptionfinals.model.user
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -43,6 +44,11 @@ class MainActivity : AppCompatActivity() {
            val intent = Intent(this, AddPetActivity::class.java)
             startActivity(intent)
         }
+
+        binding.btnLogout.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun referenceDatabase() {
@@ -73,7 +79,6 @@ class MainActivity : AppCompatActivity() {
         var petReference = Firebase.database.reference.child("Pets")
         petReference.addValueEventListener(listListener)
     }
-
 
 
 
