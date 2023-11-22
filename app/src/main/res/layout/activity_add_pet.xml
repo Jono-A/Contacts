@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="10dp"
     android:orientation="vertical"
-    tools:context=".ui.EditInfoActivity">
+    tools:context=".ui.EditInfoActivity"
+    android:background="@drawable/mainbkg">
 
     <include layout="@layout/toolbar_title"/>
 

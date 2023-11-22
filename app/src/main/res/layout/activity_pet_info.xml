@@ -8,7 +8,8 @@
     tools:context=".mvvm.PetInfoActivity"
     android:paddingLeft="5sp"
     android:paddingRight="5sp"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@drawable/mainbkg">
 
     <include layout="@layout/toolbar_title"/>
 

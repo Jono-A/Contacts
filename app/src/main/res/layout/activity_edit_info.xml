@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="10dp"
     android:orientation="vertical"
-    tools:context=".ui.EditInfoActivity">
+    tools:context=".ui.EditInfoActivity"
+    android:background="@drawable/mainbkg">
 
     <include layout="@layout/toolbar_title"/>
 
@@ -82,10 +83,10 @@
 
     <Button
         android:id="@+id/edit_contact"
-        android:layout_width="match_parent"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:text="@string/btn_edit"
-        android:background="@color/purple_200"
-        android:gravity="center" />
+        android:background="@color/skyblue"
+        android:gravity="center"
+        android:text="@string/btn_edit" />
 
 </LinearLayout>
