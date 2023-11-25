@@ -1,6 +1,7 @@
 package com.example.petadoptionfinals.ui
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.widget.Toast
@@ -28,55 +29,61 @@ class SignupActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-        binding.signupButton.setOnClickListener{
+
+        binding.signupButton.setOnClickListener {
             val name = binding.signupName.text.toString()
             val phone = binding.signupPhone.text.toString()
             val email = binding.signupEmail.text.toString()
             val password = binding.signupPassword.text.toString()
             val confirmPassword = binding.signupConfirm.text.toString()
 
-            if(name.isNotEmpty()&&phone.isNotEmpty()&& email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()){
-                if(password == confirmPassword){
 
-                    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{
-                        if (it.isSuccessful){
-                            databaseReference = FirebaseDatabase.getInstance().getReference("user")
-                            val user = user (name, phone, email,password)
-                            authFirebase.currentUser?.uid?.let { it1 ->
-                                databaseReference.child(it1).setValue(user).addOnSuccessListener {
 
-                                    binding.signupName.text.clear()
-                                    binding.signupPhone.text.clear()
-                                    binding.signupEmail.text.clear()
-                                    binding.signupPassword.text.clear()
-                                    binding.signupConfirm.text.clear()
+            if (name.isNotEmpty() && phone.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
+                if (password == confirmPassword) {
 
-                                    Toast.makeText(this,"User Added",Toast.LENGTH_SHORT).show()
+                    firebaseAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                databaseReference =
+                                    FirebaseDatabase.getInstance().getReference("user")
+                                val user = user(name, phone, email, password)
+                                authFirebase.currentUser?.uid?.let { it1 ->
+                                    databaseReference.child(it1).setValue(user)
+                                        .addOnSuccessListener {
 
-                                }.addOnFailureListener{
+                                            binding.signupName.text.clear()
+                                            binding.signupPhone.text.clear()
+                                            binding.signupEmail.text.clear()
+                                            binding.signupPassword.text.clear()
+                                            binding.signupConfirm.text.clear()
 
-                                    Toast.makeText(this,"Failed",Toast.LENGTH_SHORT).show()
+
+                                            Toast.makeText(this, "User Added", Toast.LENGTH_SHORT)
+                                                .show()
+
+                                        }.addOnFailureListener {
+
+                                            Toast.makeText(this, "Failed", Toast.LENGTH_SHORT)
+                                                .show()
+                                        }
                                 }
+                                val intent = Intent(this, LoginActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT)
+                                    .show()
                             }
-                            val intent = Intent(this, LoginActivity::class.java)
-                            startActivity(intent)
                         }
-
-                        else{
-                            Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }else {
+                } else {
                     Toast.makeText(this, "Password does not matched", Toast.LENGTH_SHORT).show()
                 }
-            }else {
+            } else {
                 Toast.makeText(this, "Field cannot be empty", Toast.LENGTH_SHORT).show()
             }
 
+
         }
-        binding.loginRedirectText.setOnClickListener{
-            val loginIntent = Intent(this, LoginActivity::class.java)
-            startActivity(loginIntent)
-        }
+
     }
 }
