@@ -5,4 +5,11 @@ data class user(
     var phoneNum : String? = null,
     var email : String? = null,
     var password : String? = null,
+    var imageUrl : String?=null,
+    var userinfo : String?=null,
+
+
+
+
+
 )
