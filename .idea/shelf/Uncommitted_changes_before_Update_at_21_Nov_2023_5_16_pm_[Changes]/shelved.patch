@@ -1,0 +1,19 @@
+Index: app/src/main/res/layout/activity_pet_info.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\" xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    tools:context=\".mvvm.PetInfoActivity\"\r\n    android:paddingLeft=\"5sp\"\r\n    android:paddingRight=\"5sp\"\r\n    android:weightSum=\"1\">\r\n\r\n    <include layout=\"@layout/toolbar_title\"/>\r\n\r\n    <ImageView\r\n        android:id=\"@+id/profilePicture\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"200dp\"\r\n        android:layout_gravity=\"center\"\r\n        tools:srcCompat=\"@drawable/ic_person\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/Name\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:textSize=\"32sp\"\r\n        android:text=\"@string/app_name\"\r\n        android:gravity=\"center\"\r\n        android:layout_marginBottom=\"24sp\"\r\n        />\r\n\r\n    <TextView\r\n        android:id=\"@+id/in_Gender\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:textSize=\"25sp\"\r\n        android:text=\"@string/app_name\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/in_Breed\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:textSize=\"25sp\"\r\n        android:text=\"@string/app_name\" />\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        android:gravity=\"center|bottom\"\r\n        android:orientation=\"vertical\"\r\n        android:layout_weight=\"1\"\r\n        >\r\n\r\n        <Button\r\n            android:id=\"@+id/btn_edit\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"@string/btn_edit\"\r\n            android:layout_marginBottom=\"10dp\"\r\n            android:background=\"@color/orange\"\r\n            />\r\n        <Button\r\n            android:id=\"@+id/btn_delete\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"@string/btn_delete\"\r\n            android:layout_marginBottom=\"10dp\"\r\n            android:background=\"@color/orange\"/>\r\n    </LinearLayout>\r\n\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_pet_info.xml b/app/src/main/res/layout/activity_pet_info.xml
+--- a/app/src/main/res/layout/activity_pet_info.xml	(revision f57ae3ebfe33b40c8c7e424030a6107e872f972d)
++++ b/app/src/main/res/layout/activity_pet_info.xml	(date 1700552390360)
+@@ -43,6 +43,8 @@
+         android:textSize="25sp"
+         android:text="@string/app_name" />
+ 
++
++
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
